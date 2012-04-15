@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="game.coffee" type="NodeJSConfigurationType" factoryName="Node JS" path-to-node="C:/npm/coffee.cmd" path-to-js-file="$PROJECT_DIR$/js/views/game.coffee" node-parameters="--compile --bare" coffeescript-run="false">
+    <RunnerSettings RunnerId="NodeJS.debug" />
+    <RunnerSettings RunnerId="NodeJS.run" />
+    <ConfigurationWrapper RunnerId="NodeJS.debug" />
+    <ConfigurationWrapper RunnerId="NodeJS.run" />
+    <method />
+  </configuration>
+</component>

@@ -1,0 +1,39 @@
+@import "mixins.less";
+@import "reset.less";
+@import "variables.less";
+@import "patterns.less";
+
+@cellWidth: 30px;
+@cellHeight: 30px;
+
+#gameapp{
+    .center-block;
+
+    table{
+        background: @grayLight;
+
+        th, td {
+            border:1px solid @white;
+        }
+
+        tr{
+            height: @cellHeight;
+
+            th {
+                width: @cellWidth;
+
+                div.cell-content{
+                    .size(@cellHeight - 2,@cellWidth - 2);
+
+                    &.hidden {
+                        background: @blue;
+                        .border-radius;
+                        margin-right: 2px;
+
+                        &:hover{ background: @blueDark;}
+                    }
+                }
+            }
+        }
+    }
+}

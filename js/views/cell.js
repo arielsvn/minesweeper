@@ -1,0 +1,88 @@
+var __slice = Array.prototype.slice,
+  __hasProp = Object.prototype.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
+
+define(['jquery', 'underscore', 'backbone'], function() {
+  var Cell, CellState, libs;
+  libs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+  CellState = {
+    empty: 'empty',
+    hidden: 'hidden',
+    info: 'info',
+    mineBlown: 'mineBlown',
+    mineVisible: 'mineVisible',
+    flagued: 'flagued',
+    unknown: 'unknown'
+  };
+  Cell = (function(_super) {
+
+    __extends(Cell, _super);
+
+    function Cell() {
+      Cell.__super__.constructor.apply(this, arguments);
+    }
+
+    Cell.prototype.hasBomb = false;
+
+    Cell.prototype.marked = false;
+
+    Cell.prototype.state = CellState.hidden;
+
+    Cell.prototype.initialize = function() {
+      return this.contentDiv = this.$('#cell-content');
+    };
+
+    Cell.prototype.mark = function() {
+      var neighbor, _i, _len, _ref;
+      _ref = this.getNeighbors();
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        neighbor = _ref[_i];
+        if (!neighbor.marked) neighbor.mark();
+      }
+      return this;
+    };
+
+    Cell.prototype.numberOfNearMines = function() {
+      var n;
+      if (this.nearMines != null) return this.nearMines;
+      return this.nearMines = ((function() {
+        var _i, _len, _ref, _results;
+        _ref = this.getNeighbors();
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          n = _ref[_i];
+          if (n.hasBomb) _results.push(n.hasBomb);
+        }
+        return _results;
+      }).call(this)).length;
+    };
+
+    Cell.prototype.getNeighbors = function() {
+      return [];
+    };
+
+    Cell.prototype.render = function() {
+      return this.contentDiv.addClass(this.state);
+    };
+
+    Cell.prototype.cleanCell = function() {
+      return this.contentDiv.removeClass(this.state);
+    };
+
+    Cell.prototype.gotoState = function(newState) {
+      this.cleanCell();
+      this.state = newState;
+      return this.render();
+    };
+
+    Cell.prototype.reset = function() {
+      this.hasBomb = false;
+      this.marked = false;
+      return this.gotoState(CellState.hidden);
+    };
+
+    return Cell;
+
+  })(Backbone.View);
+  return Cell;
+});
