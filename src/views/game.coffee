@@ -1,15 +1,5 @@
 define ['views/cell','text!templates/table-container-template.html','jquery','underscore','backbone'],
   (Cell, tableTemplate, libs...)->
-    # todo remove this
-    CellState=
-      empty: 0 # represent an empty cell, no mines around
-      hidden: 1 # represents a cell that hasn't been clicked
-      info: 2 # shows a number with the ammount of mines near this spot
-      mineBlown: 3 # after the game is completed holds represent the mine that was clicked
-      mineVisible: 4
-      flagued: 5 # should be a mine here
-      unknown: 6
-
     bidimensionalArray = (defaultValue, rows, cols)-> ((defaultValue for i in [0..cols]) for j in [0..rows])
 
     class Game extends Backbone.View
@@ -36,7 +26,7 @@ define ['views/cell','text!templates/table-container-template.html','jquery','un
         this.$('#table-container').html renderedTemplate
 
         this.cells=bidimensionalArray false, this.rows, this.cols
-        getNeighbors=(row,col) =>
+        getNeighbors=(row, col) =>
           (this.cells[i][j] for j in [col-1..col+1] when i!=j and not (i is row and j is col) and this.cells[i][j]? for i in [row-1..row+1] when this.cells[i]?)
 
         for i in [0...this.rows]
@@ -63,34 +53,7 @@ define ['views/cell','text!templates/table-container-template.html','jquery','un
         if not this.minesPlaced
           this.addMines()
 
-        if not this.gameOver and this.board[row][col] is CellState.hidden
-          cell=this.$("th[data-row=#{row}][data-col=#{col}]")
-          if this.mines[row][col]
-            # if there is a mine then game over
-            this.showMines()
-            $('div.cell-content', cell).html('x') # the cell clicked should look different
-          else
-            visitedCells=this.visitedCells
-            mark=(i,j)=>
-              cell=this.$("th[data-row=#{i}][data-col=#{j}]")
-              if visitedCells[i]? and visitedCells[i][j]? and not visitedCells[i][j] and not this.mines[i][j]
-                visitedCells[i][j]=true
-                minesNear=this.countMinesNear(i,j)
-                if minesNear is 0
-                  this.board[i][j]=CellState.empty
-                  $('div.cell-content', cell).removeClass('hidden')
-                  $('div.cell-content', cell).addClass('emptyxx')
-                else
-                  this.board[i][j]=CellState.info
-                  $('div.cell-content', cell).html(minesNear)
-
-                for i1 in [i-1..i+1]
-                  for j1 in [j-1..j+1]
-                    mark(i1,j1) if i1 isnt i or j1 isnt j
-
-                0
-
-            mark row, col
+        this.cells[row][col].mark()
 
       countMinesNear: (row,col)->
         result=0
@@ -110,11 +73,11 @@ define ['views/cell','text!templates/table-container-template.html','jquery','un
 
       addMines:->
         # adds the mines in random positions
-        this.mines[0][2]=true
-        this.mines[1][2]=true
-        this.mines[2][2]=true
-        this.mines[3][2]=true
-        this.mines[4][2]=true
+        this.cells[0][2].hasBomb=true
+        this.cells[1][2].hasBomb=true
+        this.cells[2][2].hasBomb=true
+        this.cells[3][2].hasBomb=true
+        this.cells[4][2].hasBomb=true
 
 
-    return Game
+    Game

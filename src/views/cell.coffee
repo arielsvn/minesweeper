@@ -24,7 +24,7 @@ define ['jquery','underscore','backbone'],
           this.trigger('bang', this)
 
         # discover all hidden neighbors
-        neighbor.discover() for neighbor in this.getNeighbors() when neighbor.state is CellState.hidden
+        #neighbor.discover() for neighbor in this.getNeighbors() when neighbor.state is CellState.hidden
         this
 
       discover: ->
