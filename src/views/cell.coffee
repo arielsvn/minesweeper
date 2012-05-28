@@ -24,7 +24,8 @@ define ['jquery','underscore','backbone'],
           this.trigger('bang', this)
 
         # discover all hidden neighbors
-        #neighbor.discover() for neighbor in this.getNeighbors() when neighbor.state is CellState.hidden
+        neighbor.mark() for neighbor in this.getNeighbors when neighbor.state is CellState.hidden and not neighbor.hasBomb
+
         this
 
       discover: ->
@@ -40,7 +41,7 @@ define ['jquery','underscore','backbone'],
 
       numberOfNearMines: ->
         if this.__nearMines? then return this.__nearMines
-        this.__nearMines=(n.hasBomb for n in this.getNeighbors() when n.hasBomb).length
+        this.__nearMines=(n.hasBomb for n in this.getNeighbors when n.hasBomb).length
 
       getNeighbors: ->
         # returns an array with the cells around this one

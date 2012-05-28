@@ -26,17 +26,25 @@ define ['views/cell','text!templates/table-container-template.html','jquery','un
         this.$('#table-container').html renderedTemplate
 
         this.cells=bidimensionalArray false, this.rows, this.cols
-        getNeighbors=(row, col) =>
-          (this.cells[i][j] for j in [col-1..col+1] when i!=j and not (i is row and j is col) and this.cells[i][j]? for i in [row-1..row+1] when this.cells[i]?)
+        getNeighbors = (row, col) =>
+          result=[]
+          for i in [row-1..row+1]
+            for j in [col-1..col+1]
+              if this.cells[i]? and not (i is row and j is col) and this.cells[i][j]?
+                result.push(this.cells[i][j])
+          result
 
         for i in [0...this.rows]
           for j in [0...this.cols]
             cell= new Cell
               el: this.$("th[data-row=#{i}][data-col=#{j}]")
-            i1=i; j1=j;
-            cell.getNeighbors= ()=>getNeighbors(i1,j1)
 
             this.cells[i][j]=cell
+
+        for i in [0...this.rows]
+          for j in [0...this.cols]
+            this.cells[i][j].getNeighbors = getNeighbors(i, j)
+
         this
 
       events:
