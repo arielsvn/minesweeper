@@ -17,16 +17,21 @@ define ['jquery','underscore','backbone'],
         this.contentDiv=this.$('#cell-content')
 
       mark: ->
-        # marks the current cell as visited and update the Dom
-        this.discover()
-
         if this.hasBomb
           this.trigger('bang', this)
+          this.gotoState(CellState.mineBlown)
+        else
+          # marks the current cell as visited and update the Dom
+          this.discover()
 
-        # discover all hidden neighbors
-        neighbor.mark() for neighbor in this.getNeighbors when neighbor.state is CellState.hidden and not neighbor.hasBomb
+          # discover all hidden neighbors
+          if not this.numberOfNearMines()
+            neighbor.mark() for neighbor in this.neighbors when neighbor.state is CellState.hidden and not neighbor.hasBomb
 
         this
+
+      flag: ->
+        this.gotoState(CellState.flagued)
 
       discover: ->
         # reveals the content of the cell if doesn't have any mines near
@@ -41,9 +46,9 @@ define ['jquery','underscore','backbone'],
 
       numberOfNearMines: ->
         if this.__nearMines? then return this.__nearMines
-        this.__nearMines=(n.hasBomb for n in this.getNeighbors when n.hasBomb).length
+        this.__nearMines=(n.hasBomb for n in this.neighbors when n.hasBomb).length
 
-      getNeighbors: ->
+      neighbors: ->
         # returns an array with the cells around this one
         # this method should be changed by the game class when the cell is created
         []
@@ -67,5 +72,7 @@ define ['jquery','underscore','backbone'],
         this.marked=false
 
         this.gotoState(CellState.hidden)
+
+      gameOver: -> this.gotoState(CellState.mineVisible) if this.hasBomb
 
     return Cell

@@ -22,15 +22,26 @@
             th {
                 width: @cellWidth;
 
+                font-size: 26px;
+                font-weight: bold;
+
                 #cell-content {
                     .size(@cellHeight - 2,@cellWidth - 2);
 
                     &.hidden {
-                        background: @blue;
                         .border-radius;
+                        background: @blue;
                         margin-right: 2px;
 
                         &:hover{ background: @blueDark;}
+                    }
+
+                    &.mineVisible{
+                        background: lighten(@red, 35%);
+                    }
+
+                    &.mineBlown{
+                        background: @red
                     }
                 }
             }

@@ -46,7 +46,7 @@ define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 
     };
 
     Game.prototype.render = function() {
-      var cell, getNeighbors, i, j, renderedTemplate, _ref, _ref2, _ref3, _ref4,
+      var getNeighbors, i, j, renderedTemplate, _ref, _ref2, _ref3, _ref4,
         _this = this;
       renderedTemplate = this.tableTemplate({
         rows: this.rows,
@@ -54,48 +54,96 @@ define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 
       });
       this.$('#table-container').html(renderedTemplate);
       this.cells = bidimensionalArray(false, this.rows, this.cols);
-      getNeighbors = function(row, col) {
-        var i, j, result, _ref, _ref2, _ref3, _ref4;
-        result = [];
-        for (i = _ref = row - 1, _ref2 = row + 1; _ref <= _ref2 ? i <= _ref2 : i >= _ref2; _ref <= _ref2 ? i++ : i--) {
-          for (j = _ref3 = col - 1, _ref4 = col + 1; _ref3 <= _ref4 ? j <= _ref4 : j >= _ref4; _ref3 <= _ref4 ? j++ : j--) {
-            if ((_this.cells[i] != null) && !(i === row && j === col) && (_this.cells[i][j] != null)) {
-              result.push(_this.cells[i][j]);
-            }
-          }
-        }
-        return result;
-      };
       for (i = 0, _ref = this.rows; 0 <= _ref ? i < _ref : i > _ref; 0 <= _ref ? i++ : i--) {
         for (j = 0, _ref2 = this.cols; 0 <= _ref2 ? j < _ref2 : j > _ref2; 0 <= _ref2 ? j++ : j--) {
-          cell = new Cell({
+          this.cells[i][j] = new Cell({
             el: this.$("th[data-row=" + i + "][data-col=" + j + "]")
           });
-          this.cells[i][j] = cell;
         }
       }
       for (i = 0, _ref3 = this.rows; 0 <= _ref3 ? i < _ref3 : i > _ref3; 0 <= _ref3 ? i++ : i--) {
         for (j = 0, _ref4 = this.cols; 0 <= _ref4 ? j < _ref4 : j > _ref4; 0 <= _ref4 ? j++ : j--) {
-          this.cells[i][j].getNeighbors = getNeighbors(i, j);
+          getNeighbors = function(row, col) {
+            var i, j, result, _ref5, _ref6, _ref7, _ref8;
+            result = [];
+            for (i = _ref5 = row - 1, _ref6 = row + 1; _ref5 <= _ref6 ? i <= _ref6 : i >= _ref6; _ref5 <= _ref6 ? i++ : i--) {
+              for (j = _ref7 = col - 1, _ref8 = col + 1; _ref7 <= _ref8 ? j <= _ref8 : j >= _ref8; _ref7 <= _ref8 ? j++ : j--) {
+                if ((_this.cells[i] != null) && !(i === row && j === col) && (_this.cells[i][j] != null)) {
+                  result.push(_this.cells[i][j]);
+                }
+              }
+            }
+            return result;
+          };
+          this.cells[i][j].neighbors = getNeighbors(i, j);
+          this.cells[i][j].on('bang', this.bang, this);
         }
       }
       return this;
     };
 
+    Game.prototype.bang = function(e) {
+      var i, j, _ref, _results;
+      this.gameOver = true;
+      _results = [];
+      for (i = 0, _ref = this.rows; 0 <= _ref ? i < _ref : i > _ref; 0 <= _ref ? i++ : i--) {
+        _results.push((function() {
+          var _ref2, _results2;
+          _results2 = [];
+          for (j = 0, _ref2 = this.cols; 0 <= _ref2 ? j < _ref2 : j > _ref2; 0 <= _ref2 ? j++ : j--) {
+            _results2.push(this.cells[i][j].gameOver());
+          }
+          return _results2;
+        }).call(this));
+      }
+      return _results;
+    };
+
     Game.prototype.events = {
       "click #table-container tr th": "cellClicked",
-      "click #reset-button": "reset"
+      "click #reset-button": "reset",
+      "contextmenu": 'noContext',
+      "mousedown #table-container tr th": 'cellRightClicked'
+    };
+
+    Game.prototype.cellRightClicked = function(event) {
+      var _this = this;
+      return $(event.currentTarget).mouseup(function(e) {
+        var _ref;
+        $(event.currentTarget).unbind('mouseup');
+        $(e.currentTarget).unbind('mouseup');
+        if (e.currentTarget === event.currentTarget && (e.button === (_ref = event.button) && _ref === 2)) {
+          _this.cellClicked(event);
+          return false;
+        } else {
+          return true;
+        }
+      });
     };
 
     Game.prototype.cellClicked = function(event) {
       var col, row;
-      row = parseInt(event.currentTarget.attributes['data-row'].value);
-      col = parseInt(event.currentTarget.attributes['data-col'].value);
-      return this.markCell(row, col);
+      if (!this.gameOver) {
+        row = parseInt(event.currentTarget.attributes['data-row'].value);
+        col = parseInt(event.currentTarget.attributes['data-col'].value);
+        return this.markCell(row, col);
+      }
     };
 
     Game.prototype.markCell = function(row, col) {
-      if (!this.minesPlaced) this.addMines();
+      var c, i, j;
+      if (!this.minesPlaced) {
+        c = this.numberOfMines;
+        while (c > 0) {
+          i = Math.round(this.rows * Math.random());
+          j = Math.round(this.cols * Math.random());
+          if ((i !== row && j !== col) && !this.cells[i][j].hasBomb) {
+            this.cells[i][j].hasBomb = true;
+            c--;
+          }
+        }
+        this.minesPlaced = true;
+      }
       return this.cells[row][col].mark();
     };
 
@@ -135,12 +183,9 @@ define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 
       return _results;
     };
 
-    Game.prototype.addMines = function() {
-      this.cells[0][2].hasBomb = true;
-      this.cells[1][2].hasBomb = true;
-      this.cells[2][2].hasBomb = true;
-      this.cells[3][2].hasBomb = true;
-      return this.cells[4][2].hasBomb = true;
+    Game.prototype.noContext = function(e) {
+      e.preventDefault();
+      return false;
     };
 
     return Game;

@@ -9,6 +9,6 @@ require.config({
   }
 });
 
-require(['views/game', 'modernizr'], function(Game, modernizr) {
+require(['views/game', 'modernizr', 'jquery'], function(Game) {
   return window.appview = new Game(9, 9, 10);
 });

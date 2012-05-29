@@ -32,13 +32,19 @@ define(['jquery', 'underscore', 'backbone'], function() {
 
     Cell.prototype.mark = function() {
       var neighbor, _i, _len, _ref;
-      this.discover();
-      if (this.hasBomb) this.trigger('bang', this);
-      _ref = this.getNeighbors;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        neighbor = _ref[_i];
-        if (neighbor.state === CellState.hidden && !neighbor.hasBomb) {
-          neighbor.mark();
+      if (this.hasBomb) {
+        this.trigger('bang', this);
+        this.gotoState(CellState.mineBlown);
+      } else {
+        this.discover();
+        if (!this.numberOfNearMines()) {
+          _ref = this.neighbors;
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            neighbor = _ref[_i];
+            if (neighbor.state === CellState.hidden && !neighbor.hasBomb) {
+              neighbor.mark();
+            }
+          }
         }
       }
       return this;
@@ -62,7 +68,7 @@ define(['jquery', 'underscore', 'backbone'], function() {
       if (this.__nearMines != null) return this.__nearMines;
       return this.__nearMines = ((function() {
         var _i, _len, _ref, _results;
-        _ref = this.getNeighbors;
+        _ref = this.neighbors;
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           n = _ref[_i];
@@ -72,7 +78,7 @@ define(['jquery', 'underscore', 'backbone'], function() {
       }).call(this)).length;
     };
 
-    Cell.prototype.getNeighbors = function() {
+    Cell.prototype.neighbors = function() {
       return [];
     };
 
@@ -94,6 +100,10 @@ define(['jquery', 'underscore', 'backbone'], function() {
       this.hasBomb = false;
       this.marked = false;
       return this.gotoState(CellState.hidden);
+    };
+
+    Cell.prototype.gameOver = function() {
+      if (this.hasBomb) return this.gotoState(CellState.mineVisible);
     };
 
     return Cell;
