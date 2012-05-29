@@ -1,6 +1,6 @@
 define ['views/cell','text!templates/table-container-template.html','jquery','underscore','backbone'],
-  (Cell, tableTemplate, libs...)->
-    bidimensionalArray = (defaultValue, rows, cols)-> ((defaultValue for i in [0..cols]) for j in [0..rows])
+  (Cell, tableTemplate)->
+    bidimensionalArray = (defaultValue, rows, cols)-> ((defaultValue for i in [0...cols]) for j in [0...rows])
 
     class Game extends Backbone.View
       el: $ '#gameapp'
@@ -60,16 +60,23 @@ define ['views/cell','text!templates/table-container-template.html','jquery','un
         "mousedown #table-container tr th": 'cellRightClicked'
 
       cellRightClicked: (event)->
-        $(event.currentTarget).mouseup (e)=>
-          $(event.currentTarget).unbind 'mouseup'
-          $(e.currentTarget).unbind 'mouseup'
-          if e.currentTarget == event.currentTarget and e.button == event.button == 2
+        if not this.gameOver
+          $(event.currentTarget).mouseup (e)=>
+            $(event.currentTarget).unbind 'mouseup'
+            $(e.currentTarget).unbind 'mouseup'
+            if e.currentTarget == event.currentTarget and e.button == event.button == 2
 
-            # do actions
-            this.cellClicked event
+              row= parseInt event.currentTarget.attributes['data-row'].value
+              col= parseInt event.currentTarget.attributes['data-col'].value
+              this.flagCell row, col
 
-            false
-          else true
+              false
+            else true
+
+      flagCell: (row,col)->
+        this.cells[row][col].flag()
+        if this.gameWon()
+          this.gameOver=true
 
       cellClicked: (event)->
         if not this.gameOver
@@ -85,7 +92,8 @@ define ['views/cell','text!templates/table-container-template.html','jquery','un
           while c>0
             i=Math.round this.rows * Math.random()
             j=Math.round this.cols * Math.random()
-            if (i!=row and j!=col) and not this.cells[i][j].hasBomb
+            console.log "#{i} x #{j}"
+            if (i!=row and j!=col) and 0<=i<this.rows and 0<=j<this.cols and not this.cells[i][j].hasBomb
               this.cells[i][j].hasBomb=true
               c--
 
@@ -112,5 +120,8 @@ define ['views/cell','text!templates/table-container-template.html','jquery','un
       noContext: (e)->
         e.preventDefault()
         false
+
+      gameWon: ->
+        _.any((_.union this.cells...), (cell)-> cell.missFlagued() or cell.bombNotFlagued())
 
     Game

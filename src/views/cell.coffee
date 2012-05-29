@@ -17,21 +17,27 @@ define ['jquery','underscore','backbone'],
         this.contentDiv=this.$('#cell-content')
 
       mark: ->
-        if this.hasBomb
-          this.trigger('bang', this)
-          this.gotoState(CellState.mineBlown)
-        else
-          # marks the current cell as visited and update the Dom
-          this.discover()
+        if this.state isnt CellState.flagued
+          if this.hasBomb
+            this.trigger('bang', this)
+            this.gotoState(CellState.mineBlown)
+          else
+            # marks the current cell as visited and update the Dom
+            this.discover()
 
-          # discover all hidden neighbors
-          if not this.numberOfNearMines()
-            neighbor.mark() for neighbor in this.neighbors when neighbor.state is CellState.hidden and not neighbor.hasBomb
-
-        this
+            # discover all hidden neighbors
+            if not this.numberOfNearMines()
+              neighbor.mark() for neighbor in this.neighbors when neighbor.state is CellState.hidden and not neighbor.hasBomb
 
       flag: ->
-        this.gotoState(CellState.flagued)
+        if this.state is CellState.hidden
+          this.gotoState(CellState.flagued)
+        else if this.state is CellState.flagued
+          this.gotoState(CellState.hidden)
+
+      missFlagued: -> this.state is CellState.flagued and not this.hasBomb
+
+      bombNotFlagued: -> this.state isnt CellState.flagued and this.hasBomb
 
       discover: ->
         # reveals the content of the cell if doesn't have any mines near

@@ -2,12 +2,18 @@
 @import "reset.less";
 @import "variables.less";
 @import "patterns.less";
+@import "type.less";
 
 @cellWidth: 30px;
 @cellHeight: 30px;
 
 #gameapp{
+    width: 280px;
     .center-block;
+
+    .title{
+
+    }
 
     table{
         background: @grayLight;
@@ -26,14 +32,21 @@
                 font-weight: bold;
 
                 #cell-content {
-                    .size(@cellHeight - 2,@cellWidth - 2);
+                    .size(@cellHeight - 2, @cellWidth - 2);
+                    margin: 1px;
 
                     &.hidden {
-                        .border-radius;
+                        .border-radius(2px);
                         background: @blue;
-                        margin-right: 2px;
+                        /*margin-right: 2px;*/
 
                         &:hover{ background: @blueDark;}
+
+                    }
+
+                    &.info::before {
+                        content: 'min - '
+//                        background: @blue;
                     }
 
                     &.mineVisible{
@@ -43,8 +56,59 @@
                     &.mineBlown{
                         background: @red
                     }
+
+                    &.flagued{
+                        background: @grayDark;
+                    }
                 }
             }
         }
+    }
+}
+
+.ui-dialog {
+    background-color:#99ccff;
+
+    .ui-dialog-titlebar {
+        background-color:#003399;
+    }
+
+    .ui-dialog-titlebar-close {
+        background: @gray;
+    }
+
+    .ui-dialog-titlebar-close-hover {
+        background: @black;
+    }
+
+    .ui-resizable-n {
+        background:url(../img/dialog/my-n.gif) repeat center top;
+    }
+
+    .ui-resizable-s {
+        background:url(../img/dialog/my-s.gif) repeat center top;
+    }
+
+    .ui-resizable-e {
+        background:url(../img/dialog/my-e.gif) repeat right center;
+    }
+
+    .ui-resizable-w {
+        background:url(../img/dialog/my-w.gif) repeat left center;
+    }
+
+    .ui-resizable-ne {
+        background:url(../img/dialog/my-ne.gif) repeat;
+    }
+
+    .ui-resizable-se {
+        background:url(../img/dialog/my-se.gif) repeat;
+    }
+    .ui-resizable-sw {
+        background:url(../img/dialog/my-sw.gif) repeat;
+    }
+
+    .ui-resizable-nw {
+        background:url(../img/dialog/my-nw.gif) repeat;
     }
 }

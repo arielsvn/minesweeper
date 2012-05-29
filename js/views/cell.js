@@ -31,23 +31,42 @@ define(['jquery', 'underscore', 'backbone'], function() {
     };
 
     Cell.prototype.mark = function() {
-      var neighbor, _i, _len, _ref;
-      if (this.hasBomb) {
-        this.trigger('bang', this);
-        this.gotoState(CellState.mineBlown);
-      } else {
-        this.discover();
-        if (!this.numberOfNearMines()) {
-          _ref = this.neighbors;
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            neighbor = _ref[_i];
-            if (neighbor.state === CellState.hidden && !neighbor.hasBomb) {
-              neighbor.mark();
+      var neighbor, _i, _len, _ref, _results;
+      if (this.state !== CellState.flagued) {
+        if (this.hasBomb) {
+          this.trigger('bang', this);
+          return this.gotoState(CellState.mineBlown);
+        } else {
+          this.discover();
+          if (!this.numberOfNearMines()) {
+            _ref = this.neighbors;
+            _results = [];
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              neighbor = _ref[_i];
+              if (neighbor.state === CellState.hidden && !neighbor.hasBomb) {
+                _results.push(neighbor.mark());
+              }
             }
+            return _results;
           }
         }
       }
-      return this;
+    };
+
+    Cell.prototype.flag = function() {
+      if (this.state === CellState.hidden) {
+        return this.gotoState(CellState.flagued);
+      } else if (this.state === CellState.flagued) {
+        return this.gotoState(CellState.hidden);
+      }
+    };
+
+    Cell.prototype.missFlagued = function() {
+      return this.state === CellState.flagued && !this.hasBomb;
+    };
+
+    Cell.prototype.bombNotFlagued = function() {
+      return this.state !== CellState.flagued && this.hasBomb;
     };
 
     Cell.prototype.discover = function() {

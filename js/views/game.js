@@ -1,18 +1,16 @@
-var __slice = Array.prototype.slice,
-  __hasProp = Object.prototype.hasOwnProperty,
+var __hasProp = Object.prototype.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 'underscore', 'backbone'], function() {
-  var Cell, Game, bidimensionalArray, libs, tableTemplate;
-  Cell = arguments[0], tableTemplate = arguments[1], libs = 3 <= arguments.length ? __slice.call(arguments, 2) : [];
+define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 'underscore', 'backbone'], function(Cell, tableTemplate) {
+  var Game, bidimensionalArray;
   bidimensionalArray = function(defaultValue, rows, cols) {
     var i, j, _results;
     _results = [];
-    for (j = 0; 0 <= rows ? j <= rows : j >= rows; 0 <= rows ? j++ : j--) {
+    for (j = 0; 0 <= rows ? j < rows : j > rows; 0 <= rows ? j++ : j--) {
       _results.push((function() {
         var _results2;
         _results2 = [];
-        for (i = 0; 0 <= cols ? i <= cols : i >= cols; 0 <= cols ? i++ : i--) {
+        for (i = 0; 0 <= cols ? i < cols : i > cols; 0 <= cols ? i++ : i--) {
           _results2.push(defaultValue);
         }
         return _results2;
@@ -108,17 +106,26 @@ define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 
 
     Game.prototype.cellRightClicked = function(event) {
       var _this = this;
-      return $(event.currentTarget).mouseup(function(e) {
-        var _ref;
-        $(event.currentTarget).unbind('mouseup');
-        $(e.currentTarget).unbind('mouseup');
-        if (e.currentTarget === event.currentTarget && (e.button === (_ref = event.button) && _ref === 2)) {
-          _this.cellClicked(event);
-          return false;
-        } else {
-          return true;
-        }
-      });
+      if (!this.gameOver) {
+        return $(event.currentTarget).mouseup(function(e) {
+          var col, row, _ref;
+          $(event.currentTarget).unbind('mouseup');
+          $(e.currentTarget).unbind('mouseup');
+          if (e.currentTarget === event.currentTarget && (e.button === (_ref = event.button) && _ref === 2)) {
+            row = parseInt(event.currentTarget.attributes['data-row'].value);
+            col = parseInt(event.currentTarget.attributes['data-col'].value);
+            _this.flagCell(row, col);
+            return false;
+          } else {
+            return true;
+          }
+        });
+      }
+    };
+
+    Game.prototype.flagCell = function(row, col) {
+      this.cells[row][col].flag();
+      if (this.gameWon()) return this.gameOver = true;
     };
 
     Game.prototype.cellClicked = function(event) {
@@ -137,7 +144,8 @@ define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 
         while (c > 0) {
           i = Math.round(this.rows * Math.random());
           j = Math.round(this.cols * Math.random());
-          if ((i !== row && j !== col) && !this.cells[i][j].hasBomb) {
+          console.log("" + i + " x " + j);
+          if ((i !== row && j !== col) && (0 <= i && i < this.rows) && (0 <= j && j < this.cols) && !this.cells[i][j].hasBomb) {
             this.cells[i][j].hasBomb = true;
             c--;
           }
@@ -186,6 +194,12 @@ define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 
     Game.prototype.noContext = function(e) {
       e.preventDefault();
       return false;
+    };
+
+    Game.prototype.gameWon = function() {
+      return _.any(_.union.apply(_, this.cells), function(cell) {
+        return cell.missFlagued() || cell.bombNotFlagued();
+      });
     };
 
     return Game;
