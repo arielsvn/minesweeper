@@ -1,14 +1,5 @@
-define ['jquery','underscore','backbone'],
-  (libs...)->
-    CellState=
-      empty: 'empty' # represent an empty cell, no mines around
-      hidden: 'hidden' # represents a cell that hasn't been clicked
-      info: 'info' # shows a number with the ammount of mines near this spot
-      mineBlown: 'mineBlown' # after the game is completed holds represent the mine that was clicked
-      mineVisible: 'mineVisible'
-      flagued: 'flagued' # should be a mine here
-      unknown: 'unknown'
-
+define ['views/cellstate','jquery','underscore','backbone'],
+  (CellState)->
     class Cell extends Backbone.View
       hasBomb: false
       state: CellState.hidden
@@ -35,10 +26,6 @@ define ['jquery','underscore','backbone'],
         else if this.state is CellState.flagued
           this.gotoState(CellState.hidden)
 
-      missFlagued: -> this.state is CellState.flagued and not this.hasBomb
-
-      bombNotFlagued: -> this.state isnt CellState.flagued and this.hasBomb
-
       discover: ->
         # reveals the content of the cell if doesn't have any mines near
         if this.state is CellState.info and this.numberOfNearMines() is 0
@@ -59,9 +46,6 @@ define ['jquery','underscore','backbone'],
         # this method should be changed by the game class when the cell is created
         []
 
-      render: ->
-        this.contentDiv.addClass(this.state)
-
       cleanCell: ->
         # called before the state of the cell changes
         # removes all state specific tasks
@@ -71,12 +55,10 @@ define ['jquery','underscore','backbone'],
         # sets the current state of the cell rendering the required content
         this.cleanCell()
         this.state=newState
-        this.render()
+        this.contentDiv.addClass this.state
 
       reset: ->
         this.hasBomb=false
-        this.marked=false
-
         this.gotoState(CellState.hidden)
 
       gameOver: -> this.gotoState(CellState.mineVisible) if this.hasBomb

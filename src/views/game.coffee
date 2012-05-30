@@ -1,6 +1,12 @@
-define ['views/cell','text!templates/table-container-template.html','jquery','underscore','backbone'],
-  (Cell, tableTemplate)->
+define ['views/cell', 'views/cellstate','text!templates/table-container-template.html','jquery','underscore','backbone'],
+  (Cell, CellState, tableTemplate)->
     bidimensionalArray = (defaultValue, rows, cols)-> ((defaultValue for i in [0...cols]) for j in [0...rows])
+
+    GameState=
+      stand: 'stand'
+      playing: 'playing'
+      won: 'won'
+      lost: 'lost'
 
     class Game extends Backbone.View
       el: $ '#gameapp'
@@ -11,14 +17,25 @@ define ['views/cell','text!templates/table-container-template.html','jquery','un
         this.rows=rows
         this.cols=cols
         this.numberOfMines=numberOfMines
+        this.state=GameState.stand
 
         this.reset()
+
+      gotoState: (state)->
+        this.$el.removeClass this.state
+        this.state=state
+        this.$el.addClass this.state
 
       reset: ->
         this.minesPlaced=false
         this._gameOver=false
 
-        this.$('#reset-button').removeClass 'primary'
+        this.gotoState GameState.stand
+
+        this.$('#time-left').html '0'
+
+        this.flags=0
+        this.$('#mines-left').html this.numberOfMines
 
         this.render()
 
@@ -49,15 +66,20 @@ define ['views/cell','text!templates/table-container-template.html','jquery','un
 
         this
 
-      gameOver: ->
+      gameOver: (won)->
         this._gameOver=true
-        this.$('#reset-button').addClass 'primary'
+
+        if won
+          this.gotoState GameState.won
+        else this.gotoState GameState.lost
 
       bang: (e) ->
-        this.gameOver()
+        this.gameOver false
+        # reveal all mines
         for i in [0...this.rows]
           for j in [0...this.cols]
-              this.cells[i][j].gameOver()
+            if this.cells[i][j].hasBomb
+              this.cells[i][j].gotoState CellState.mineVisible
 
       events:
         "click #table-container tr th":  "cellClicked"
@@ -82,8 +104,11 @@ define ['views/cell','text!templates/table-container-template.html','jquery','un
 
       flagCell: (row,col)->
         this.cells[row][col].flag()
-        if this.gameWon()
-          this.gameOver()
+
+        this.flags += if this.cells[row][col].state is CellState.flagued then 1 else -1
+        this.$('#mines-left').html this.numberOfMines-this.flags
+
+        this.gameOver(true) if this.gameWon()
 
       cellClicked: (event)->
         if not this._gameOver
@@ -92,6 +117,18 @@ define ['views/cell','text!templates/table-container-template.html','jquery','un
 
           this.markCell row, col
 
+      startTime: ->
+        time=this.$('#time-left')
+        currentTime=0
+        updateTime = {}
+        updateTime = ()=>
+          if not this._gameOver
+            time.html currentTime
+            currentTime++
+            setTimeout(updateTime, 1000)
+
+        updateTime()
+
       markCell:(row,col)->
         # add the mines after the first click
         if not this.minesPlaced
@@ -99,14 +136,16 @@ define ['views/cell','text!templates/table-container-template.html','jquery','un
           while c>0
             i=Math.round this.rows * Math.random()
             j=Math.round this.cols * Math.random()
-            console.log "#{i} x #{j}"
             if (i!=row and j!=col) and 0<=i<this.rows and 0<=j<this.cols and not this.cells[i][j].hasBomb
               this.cells[i][j].hasBomb=true
               c--
+          this.startTime()
 
           this.minesPlaced=true
+          this.gotoState GameState.playing
 
         this.cells[row][col].mark()
+        this.gameOver(true) if this.gameWon()
 
       countMinesNear: (row,col)->
         result=0
@@ -129,6 +168,12 @@ define ['views/cell','text!templates/table-container-template.html','jquery','un
         false
 
       gameWon: ->
-        not _.any((_.union this.cells...), (cell)-> cell.missFlagued() or cell.bombNotFlagued())
+        cellMarked = (cell)-> cell.state isnt CellState.hidden
+        missFlagued = (cell)-> cell.state is CellState.flagued and not cell.hasBomb
+        bombNotFlagued = (cell)-> cell.state isnt CellState.flagued and cell.hasBomb
+        cells = _.union this.cells...
+
+        not _.any(cells, (cell)-> missFlagued(cell) or bombNotFlagued(cell)) \
+        or (not _.any(cells, (cell)-> not cell.hasBomb and not cellMarked(cell)) and not _.any(cells, (cell)-> missFlagued cell))
 
     Game

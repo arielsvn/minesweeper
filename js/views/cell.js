@@ -1,19 +1,8 @@
-var __slice = Array.prototype.slice,
-  __hasProp = Object.prototype.hasOwnProperty,
+var __hasProp = Object.prototype.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-define(['jquery', 'underscore', 'backbone'], function() {
-  var Cell, CellState, libs;
-  libs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-  CellState = {
-    empty: 'empty',
-    hidden: 'hidden',
-    info: 'info',
-    mineBlown: 'mineBlown',
-    mineVisible: 'mineVisible',
-    flagued: 'flagued',
-    unknown: 'unknown'
-  };
+define(['views/cellstate', 'jquery', 'underscore', 'backbone'], function(CellState) {
+  var Cell;
   Cell = (function(_super) {
 
     __extends(Cell, _super);
@@ -61,14 +50,6 @@ define(['jquery', 'underscore', 'backbone'], function() {
       }
     };
 
-    Cell.prototype.missFlagued = function() {
-      return this.state === CellState.flagued && !this.hasBomb;
-    };
-
-    Cell.prototype.bombNotFlagued = function() {
-      return this.state !== CellState.flagued && this.hasBomb;
-    };
-
     Cell.prototype.discover = function() {
       if (this.state === CellState.info && this.numberOfNearMines() === 0) {
         return this.gotoState(CellState.empty);
@@ -101,10 +82,6 @@ define(['jquery', 'underscore', 'backbone'], function() {
       return [];
     };
 
-    Cell.prototype.render = function() {
-      return this.contentDiv.addClass(this.state);
-    };
-
     Cell.prototype.cleanCell = function() {
       return this.contentDiv.removeClass(this.state);
     };
@@ -112,12 +89,11 @@ define(['jquery', 'underscore', 'backbone'], function() {
     Cell.prototype.gotoState = function(newState) {
       this.cleanCell();
       this.state = newState;
-      return this.render();
+      return this.contentDiv.addClass(this.state);
     };
 
     Cell.prototype.reset = function() {
       this.hasBomb = false;
-      this.marked = false;
       return this.gotoState(CellState.hidden);
     };
 

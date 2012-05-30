@@ -1,8 +1,8 @@
 var __hasProp = Object.prototype.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 'underscore', 'backbone'], function(Cell, tableTemplate) {
-  var Game, bidimensionalArray;
+define(['views/cell', 'views/cellstate', 'text!templates/table-container-template.html', 'jquery', 'underscore', 'backbone'], function(Cell, CellState, tableTemplate) {
+  var Game, GameState, bidimensionalArray;
   bidimensionalArray = function(defaultValue, rows, cols) {
     var i, j, _results;
     _results = [];
@@ -17,6 +17,12 @@ define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 
       })());
     }
     return _results;
+  };
+  GameState = {
+    stand: 'stand',
+    playing: 'playing',
+    won: 'won',
+    lost: 'lost'
   };
   Game = (function(_super) {
 
@@ -34,13 +40,23 @@ define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 
       this.rows = rows;
       this.cols = cols;
       this.numberOfMines = numberOfMines;
+      this.state = GameState.stand;
       return this.reset();
+    };
+
+    Game.prototype.gotoState = function(state) {
+      this.$el.removeClass(this.state);
+      this.state = state;
+      return this.$el.addClass(this.state);
     };
 
     Game.prototype.reset = function() {
       this.minesPlaced = false;
       this._gameOver = false;
-      this.$('#reset-button').removeClass('primary');
+      this.gotoState(GameState.stand);
+      this.$('#time-left').html('0');
+      this.flags = 0;
+      this.$('#mines-left').html(this.numberOfMines);
       return this.render();
     };
 
@@ -81,21 +97,29 @@ define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 
       return this;
     };
 
-    Game.prototype.gameOver = function() {
+    Game.prototype.gameOver = function(won) {
       this._gameOver = true;
-      return this.$('#reset-button').addClass('primary');
+      if (won) {
+        return this.gotoState(GameState.won);
+      } else {
+        return this.gotoState(GameState.lost);
+      }
     };
 
     Game.prototype.bang = function(e) {
       var i, j, _ref, _results;
-      this.gameOver();
+      this.gameOver(false);
       _results = [];
       for (i = 0, _ref = this.rows; 0 <= _ref ? i < _ref : i > _ref; 0 <= _ref ? i++ : i--) {
         _results.push((function() {
           var _ref2, _results2;
           _results2 = [];
           for (j = 0, _ref2 = this.cols; 0 <= _ref2 ? j < _ref2 : j > _ref2; 0 <= _ref2 ? j++ : j--) {
-            _results2.push(this.cells[i][j].gameOver());
+            if (this.cells[i][j].hasBomb) {
+              _results2.push(this.cells[i][j].gotoState(CellState.mineVisible));
+            } else {
+              _results2.push(void 0);
+            }
           }
           return _results2;
         }).call(this));
@@ -131,7 +155,9 @@ define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 
 
     Game.prototype.flagCell = function(row, col) {
       this.cells[row][col].flag();
-      if (this.gameWon()) return this.gameOver();
+      this.flags += this.cells[row][col].state === CellState.flagued ? 1 : -1;
+      this.$('#mines-left').html(this.numberOfMines - this.flags);
+      if (this.gameWon()) return this.gameOver(true);
     };
 
     Game.prototype.cellClicked = function(event) {
@@ -143,6 +169,22 @@ define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 
       }
     };
 
+    Game.prototype.startTime = function() {
+      var currentTime, time, updateTime,
+        _this = this;
+      time = this.$('#time-left');
+      currentTime = 0;
+      updateTime = {};
+      updateTime = function() {
+        if (!_this._gameOver) {
+          time.html(currentTime);
+          currentTime++;
+          return setTimeout(updateTime, 1000);
+        }
+      };
+      return updateTime();
+    };
+
     Game.prototype.markCell = function(row, col) {
       var c, i, j;
       if (!this.minesPlaced) {
@@ -150,15 +192,17 @@ define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 
         while (c > 0) {
           i = Math.round(this.rows * Math.random());
           j = Math.round(this.cols * Math.random());
-          console.log("" + i + " x " + j);
           if ((i !== row && j !== col) && (0 <= i && i < this.rows) && (0 <= j && j < this.cols) && !this.cells[i][j].hasBomb) {
             this.cells[i][j].hasBomb = true;
             c--;
           }
         }
+        this.startTime();
         this.minesPlaced = true;
+        this.gotoState(GameState.playing);
       }
-      return this.cells[row][col].mark();
+      this.cells[row][col].mark();
+      if (this.gameWon()) return this.gameOver(true);
     };
 
     Game.prototype.countMinesNear = function(row, col) {
@@ -203,9 +247,24 @@ define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 
     };
 
     Game.prototype.gameWon = function() {
-      return !_.any(_.union.apply(_, this.cells), function(cell) {
-        return cell.missFlagued() || cell.bombNotFlagued();
-      });
+      var bombNotFlagued, cellMarked, cells, missFlagued;
+      cellMarked = function(cell) {
+        return cell.state !== CellState.hidden;
+      };
+      missFlagued = function(cell) {
+        return cell.state === CellState.flagued && !cell.hasBomb;
+      };
+      bombNotFlagued = function(cell) {
+        return cell.state !== CellState.flagued && cell.hasBomb;
+      };
+      cells = _.union.apply(_, this.cells);
+      return !_.any(cells, function(cell) {
+        return missFlagued(cell) || bombNotFlagued(cell);
+      }) || (!_.any(cells, function(cell) {
+        return !cell.hasBomb && !cellMarked(cell);
+      }) && !_.any(cells, function(cell) {
+        return missFlagued(cell);
+      }));
     };
 
     return Game;

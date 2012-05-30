@@ -3,6 +3,7 @@
 @import "variables.less";
 @import "patterns.less";
 @import "type.less";
+@import "forms.less";
 
 @cellWidth: 30px;
 @cellHeight: 30px;
@@ -12,10 +13,51 @@
     width: 280px;
     .center-block;
 
-
     header h1{
         text-align: center;
-        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-family: Segoe UI, Tahoma, Geneva, Verdana;
+        text-shadow: 0.10em 0.09em 5px #BBB;
+    }
+
+    div.well #bar-container {
+        position:relative;
+        right: 0px;
+        left: 0px;
+
+        div {
+            display: inline;
+        }
+        #time-left{
+            position: absolute;
+            left: 0px;
+        }
+        #mines-left{
+            margin-right: 0;
+            position: absolute;
+            right: 0px;
+            top: 1px;
+        }
+        #reset-button{
+            width: 56px;
+            .center-block;
+        }
+        #time-left, #mines-left {
+            width: 25px;
+            text-align: center;
+        }
+    }
+
+    &.playing #reset-button{
+        color: @white;
+        .gradientBar(@blue, @blueDark);
+    }
+
+    &.won #reset-button{
+        .gradientBar(#62c462, #57a957);
+    }
+
+    &.lost #reset-button{
+        .gradientBar(#ee5f5b, #c43c35);
     }
 
     table{
@@ -44,7 +86,6 @@
                         /*margin-right: 2px;*/
 
                         &:hover{ background: @blueDark;}
-
                     }
 
                     &.info::before {
@@ -66,52 +107,5 @@
                 }
             }
         }
-    }
-}
-
-.ui-dialog {
-    background-color:#99ccff;
-
-    .ui-dialog-titlebar {
-        background-color:#003399;
-    }
-
-    .ui-dialog-titlebar-close {
-        background: @gray;
-    }
-
-    .ui-dialog-titlebar-close-hover {
-        background: @black;
-    }
-
-    .ui-resizable-n {
-        background:url(../img/dialog/my-n.gif) repeat center top;
-    }
-
-    .ui-resizable-s {
-        background:url(../img/dialog/my-s.gif) repeat center top;
-    }
-
-    .ui-resizable-e {
-        background:url(../img/dialog/my-e.gif) repeat right center;
-    }
-
-    .ui-resizable-w {
-        background:url(../img/dialog/my-w.gif) repeat left center;
-    }
-
-    .ui-resizable-ne {
-        background:url(../img/dialog/my-ne.gif) repeat;
-    }
-
-    .ui-resizable-se {
-        background:url(../img/dialog/my-se.gif) repeat;
-    }
-    .ui-resizable-sw {
-        background:url(../img/dialog/my-sw.gif) repeat;
-    }
-
-    .ui-resizable-nw {
-        background:url(../img/dialog/my-nw.gif) repeat;
     }
 }
