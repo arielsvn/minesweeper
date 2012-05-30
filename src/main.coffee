@@ -52,13 +52,13 @@ class Cell extends Backbone.View
     this.__nearMines=(n.hasBomb for n in this.neighbors when n.hasBomb).length
 
   neighbors: ->
-  # returns an array with the cells around this one
-  # this method should be changed by the game class when the cell is created
+    # returns an array with the cells around this one
+    # this method should be changed by the game class when the cell is created
     []
 
   cleanCell: ->
-  # called before the state of the cell changes
-  # removes all state specific tasks
+    # called before the state of the cell changes
+    # removes all state specific tasks
     this.contentDiv.removeClass(this.state)
 
   gotoState: (newState)->
