@@ -89,26 +89,24 @@ define ['views/cell', 'views/cellstate','text!templates/table-container-template
         "mousedown #table-container tr th": 'cellRightClicked'
 
       cellRightClicked: (event)->
-        if not this._gameOver
-          $(event.currentTarget).mouseup (e)=>
-            $(event.currentTarget).unbind 'mouseup'
-            $(e.currentTarget).unbind 'mouseup'
-            if e.currentTarget == event.currentTarget and e.button == event.button == 2
+        $(event.currentTarget).mouseup (e)=>
+          $(event.currentTarget).unbind 'mouseup'
+          $(e.currentTarget).unbind 'mouseup'
+          if e.currentTarget == event.currentTarget and e.button == event.button == 2
 
-              row= parseInt event.currentTarget.attributes['data-row'].value
-              col= parseInt event.currentTarget.attributes['data-col'].value
-              this.flagCell row, col
+            row= parseInt event.currentTarget.attributes['data-row'].value
+            col= parseInt event.currentTarget.attributes['data-col'].value
+            this.flagCell row, col
 
-              false
-            else true
+            false
+          else true
 
       flagCell: (row,col)->
-        this.cells[row][col].flag()
+        if not this._gameOver and this.cells[row][col].flag()
+          this.flags += if this.cells[row][col].state is CellState.flagued then 1 else -1
+          this.$('#mines-left').html this.numberOfMines-this.flags
 
-        this.flags += if this.cells[row][col].state is CellState.flagued then 1 else -1
-        this.$('#mines-left').html this.numberOfMines-this.flags
-
-        this.gameOver(true) if this.gameWon()
+          this.gameOver(true) if this.gameWon()
 
       cellClicked: (event)->
         if not this._gameOver

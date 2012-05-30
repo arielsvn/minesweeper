@@ -44,10 +44,13 @@ define(['views/cellstate', 'jquery', 'underscore', 'backbone'], function(CellSta
 
     Cell.prototype.flag = function() {
       if (this.state === CellState.hidden) {
-        return this.gotoState(CellState.flagued);
+        this.gotoState(CellState.flagued);
+        return true;
       } else if (this.state === CellState.flagued) {
-        return this.gotoState(CellState.hidden);
+        this.gotoState(CellState.hidden);
+        return true;
       }
+      return false;
     };
 
     Cell.prototype.discover = function() {
@@ -89,7 +92,10 @@ define(['views/cellstate', 'jquery', 'underscore', 'backbone'], function(CellSta
     Cell.prototype.gotoState = function(newState) {
       this.cleanCell();
       this.state = newState;
-      return this.contentDiv.addClass(this.state);
+      this.contentDiv.addClass(this.state);
+      if (this.state === CellState.info) {
+        return this.contentDiv.addClass('num' + this.numberOfNearMines());
+      }
     };
 
     Cell.prototype.reset = function() {

@@ -136,28 +136,27 @@ define(['views/cell', 'views/cellstate', 'text!templates/table-container-templat
 
     Game.prototype.cellRightClicked = function(event) {
       var _this = this;
-      if (!this._gameOver) {
-        return $(event.currentTarget).mouseup(function(e) {
-          var col, row, _ref;
-          $(event.currentTarget).unbind('mouseup');
-          $(e.currentTarget).unbind('mouseup');
-          if (e.currentTarget === event.currentTarget && (e.button === (_ref = event.button) && _ref === 2)) {
-            row = parseInt(event.currentTarget.attributes['data-row'].value);
-            col = parseInt(event.currentTarget.attributes['data-col'].value);
-            _this.flagCell(row, col);
-            return false;
-          } else {
-            return true;
-          }
-        });
-      }
+      return $(event.currentTarget).mouseup(function(e) {
+        var col, row, _ref;
+        $(event.currentTarget).unbind('mouseup');
+        $(e.currentTarget).unbind('mouseup');
+        if (e.currentTarget === event.currentTarget && (e.button === (_ref = event.button) && _ref === 2)) {
+          row = parseInt(event.currentTarget.attributes['data-row'].value);
+          col = parseInt(event.currentTarget.attributes['data-col'].value);
+          _this.flagCell(row, col);
+          return false;
+        } else {
+          return true;
+        }
+      });
     };
 
     Game.prototype.flagCell = function(row, col) {
-      this.cells[row][col].flag();
-      this.flags += this.cells[row][col].state === CellState.flagued ? 1 : -1;
-      this.$('#mines-left').html(this.numberOfMines - this.flags);
-      if (this.gameWon()) return this.gameOver(true);
+      if (!this._gameOver && this.cells[row][col].flag()) {
+        this.flags += this.cells[row][col].state === CellState.flagued ? 1 : -1;
+        this.$('#mines-left').html(this.numberOfMines - this.flags);
+        if (this.gameWon()) return this.gameOver(true);
+      }
     };
 
     Game.prototype.cellClicked = function(event) {

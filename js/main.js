@@ -4,12 +4,11 @@ require.config({
     jquery: 'libs/jquery-1.5.1',
     underscore: 'libs/underscore',
     backbone: 'libs/backbone',
-    text: 'libs/text',
-    modernizr: 'libs/modernizr-1.7'
+    text: 'libs/text'
   }
 });
 
-require(['views/game', 'modernizr', 'jquery'], function(Game) {
+require(['views/game', 'jquery'], function(Game) {
   var game;
   return game = new Game(9, 9, 10);
 });

@@ -23,8 +23,11 @@ define ['views/cellstate','jquery','underscore','backbone'],
       flag: ->
         if this.state is CellState.hidden
           this.gotoState(CellState.flagued)
+          return true
         else if this.state is CellState.flagued
           this.gotoState(CellState.hidden)
+          return true
+        return false
 
       discover: ->
         # reveals the content of the cell if doesn't have any mines near
@@ -56,6 +59,9 @@ define ['views/cellstate','jquery','underscore','backbone'],
         this.cleanCell()
         this.state=newState
         this.contentDiv.addClass this.state
+
+        if this.state is CellState.info
+          this.contentDiv.addClass 'num'+this.numberOfNearMines()
 
       reset: ->
         this.hasBomb=false

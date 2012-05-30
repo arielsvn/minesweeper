@@ -6,7 +6,7 @@ require.config
     underscore: 'libs/underscore'
     backbone: 'libs/backbone'
     text: 'libs/text'
-    modernizr: 'libs/modernizr-1.7'
+#    modernizr: 'libs/modernizr-1.7'
 
-require ['views/game', 'modernizr', 'jquery'], (Game)->
+require ['views/game', 'jquery'], (Game)->
   game=new Game 9,9, 10
