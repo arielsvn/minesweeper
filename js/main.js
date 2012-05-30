@@ -11,5 +11,18 @@ require.config({
 });
 
 require(['views/game', 'modernizr', 'jquery', 'jqueryui'], function(Game) {
-  return window.appview = new Game(9, 9, 10);
+  window.appview = new Game(9, 9, 10);
+  return $('#wondialog').dialog({
+    modal: true,
+    resizable: false,
+    title: 'Congrats',
+    overlay: {
+      background: '#99ccff'
+    },
+    buttons: {
+      'Ok': function() {
+        return $(this).dialog('close');
+      }
+    }
+  });
 });

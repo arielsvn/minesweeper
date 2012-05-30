@@ -12,12 +12,12 @@ require ['views/game', 'modernizr', 'jquery', 'jqueryui'], (Game)->
   window.appview = new Game 9,9, 10
 
 
-#  $('#wondialog').dialog
-##    autoOpen: false
-#    modal: true
-#    resizable: false
-#    title: 'Congrats'
-#    overlay:
-#      background: '#99ccff'
-#    buttons:
-#      'Ok': ()-> $(this).dialog 'close'
+  $('#wondialog').dialog
+#    autoOpen: false
+    modal: true
+    resizable: false
+    title: 'Congrats'
+    overlay:
+      background: '#99ccff'
+    buttons:
+      'Ok': ()-> $(this).dialog 'close'

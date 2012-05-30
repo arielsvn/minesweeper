@@ -16,7 +16,10 @@ define ['views/cell','text!templates/table-container-template.html','jquery','un
 
       reset: ->
         this.minesPlaced=false
-        this.gameOver=false
+        this._gameOver=false
+
+        this.$('#reset-button').removeClass 'primary'
+
         this.render()
 
       render: ->
@@ -46,8 +49,12 @@ define ['views/cell','text!templates/table-container-template.html','jquery','un
 
         this
 
+      gameOver: ->
+        this._gameOver=true
+        this.$('#reset-button').addClass 'primary'
+
       bang: (e) ->
-        this.gameOver = true
+        this.gameOver()
         for i in [0...this.rows]
           for j in [0...this.cols]
               this.cells[i][j].gameOver()
@@ -56,11 +63,11 @@ define ['views/cell','text!templates/table-container-template.html','jquery','un
         "click #table-container tr th":  "cellClicked"
         "click #reset-button":  "reset"
 
-        "contextmenu": 'noContext'
+        "contextmenu #table-container tr th": 'noContext'
         "mousedown #table-container tr th": 'cellRightClicked'
 
       cellRightClicked: (event)->
-        if not this.gameOver
+        if not this._gameOver
           $(event.currentTarget).mouseup (e)=>
             $(event.currentTarget).unbind 'mouseup'
             $(e.currentTarget).unbind 'mouseup'
@@ -76,10 +83,10 @@ define ['views/cell','text!templates/table-container-template.html','jquery','un
       flagCell: (row,col)->
         this.cells[row][col].flag()
         if this.gameWon()
-          this.gameOver=true
+          this.gameOver()
 
       cellClicked: (event)->
-        if not this.gameOver
+        if not this._gameOver
           row= parseInt event.currentTarget.attributes['data-row'].value
           col= parseInt event.currentTarget.attributes['data-col'].value
 
@@ -111,7 +118,7 @@ define ['views/cell','text!templates/table-container-template.html','jquery','un
         return result
 
       showMines: ->
-        this.gameOver=true
+        this._gameOver=true
         for i in [0..this.rows]
           for j in [0..this.cols]
             if this.mines[i][j]
@@ -122,6 +129,6 @@ define ['views/cell','text!templates/table-container-template.html','jquery','un
         false
 
       gameWon: ->
-        _.any((_.union this.cells...), (cell)-> cell.missFlagued() or cell.bombNotFlagued())
+        not _.any((_.union this.cells...), (cell)-> cell.missFlagued() or cell.bombNotFlagued())
 
     Game

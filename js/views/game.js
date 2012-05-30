@@ -39,7 +39,8 @@ define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 
 
     Game.prototype.reset = function() {
       this.minesPlaced = false;
-      this.gameOver = false;
+      this._gameOver = false;
+      this.$('#reset-button').removeClass('primary');
       return this.render();
     };
 
@@ -80,9 +81,14 @@ define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 
       return this;
     };
 
+    Game.prototype.gameOver = function() {
+      this._gameOver = true;
+      return this.$('#reset-button').addClass('primary');
+    };
+
     Game.prototype.bang = function(e) {
       var i, j, _ref, _results;
-      this.gameOver = true;
+      this.gameOver();
       _results = [];
       for (i = 0, _ref = this.rows; 0 <= _ref ? i < _ref : i > _ref; 0 <= _ref ? i++ : i--) {
         _results.push((function() {
@@ -100,13 +106,13 @@ define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 
     Game.prototype.events = {
       "click #table-container tr th": "cellClicked",
       "click #reset-button": "reset",
-      "contextmenu": 'noContext',
+      "contextmenu #table-container tr th": 'noContext',
       "mousedown #table-container tr th": 'cellRightClicked'
     };
 
     Game.prototype.cellRightClicked = function(event) {
       var _this = this;
-      if (!this.gameOver) {
+      if (!this._gameOver) {
         return $(event.currentTarget).mouseup(function(e) {
           var col, row, _ref;
           $(event.currentTarget).unbind('mouseup');
@@ -125,12 +131,12 @@ define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 
 
     Game.prototype.flagCell = function(row, col) {
       this.cells[row][col].flag();
-      if (this.gameWon()) return this.gameOver = true;
+      if (this.gameWon()) return this.gameOver();
     };
 
     Game.prototype.cellClicked = function(event) {
       var col, row;
-      if (!this.gameOver) {
+      if (!this._gameOver) {
         row = parseInt(event.currentTarget.attributes['data-row'].value);
         col = parseInt(event.currentTarget.attributes['data-col'].value);
         return this.markCell(row, col);
@@ -172,7 +178,7 @@ define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 
 
     Game.prototype.showMines = function() {
       var i, j, _ref, _results;
-      this.gameOver = true;
+      this._gameOver = true;
       _results = [];
       for (i = 0, _ref = this.rows; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
         _results.push((function() {
@@ -197,7 +203,7 @@ define(['views/cell', 'text!templates/table-container-template.html', 'jquery', 
     };
 
     Game.prototype.gameWon = function() {
-      return _.any(_.union.apply(_, this.cells), function(cell) {
+      return !_.any(_.union.apply(_, this.cells), function(cell) {
         return cell.missFlagued() || cell.bombNotFlagued();
       });
     };
