@@ -2,7 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8ded2582-3945-4287-8f40-baff37f5675e" name="Default" comment="">
+      <change type="DELETED" beforePath="D:\[Ariel]\[Projects]\[Web]\Minesweeper\js\views\cell.js" afterPath="" />
+      <change type="DELETED" beforePath="D:\[Ariel]\[Projects]\[Web]\Minesweeper\js\views\cellstate.js" afterPath="" />
+      <change type="DELETED" beforePath="D:\[Ariel]\[Projects]\[Web]\Minesweeper\js\views\game.js" afterPath="" />
+      <change type="DELETED" beforePath="D:\[Ariel]\[Projects]\[Web]\Minesweeper\src\views\cell.coffee" afterPath="" />
+      <change type="DELETED" beforePath="D:\[Ariel]\[Projects]\[Web]\Minesweeper\src\views\cellstate.coffee" afterPath="" />
+      <change type="DELETED" beforePath="D:\[Ariel]\[Projects]\[Web]\Minesweeper\src\views\game.coffee" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/main.js" afterPath="$PROJECT_DIR$/js/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.coffee" afterPath="$PROJECT_DIR$/src/main.coffee" />
     </list>
     <ignored path="Minesweeper.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,37 +33,82 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="0" selection-start="688" selection-end="688" vertical-scroll-proportion="-13.846154">
+            <state line="7" column="0" selection-start="222" selection-end="222" vertical-scroll-proportion="0.30203044">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="game.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/game.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="0" selection-start="270" selection-end="270" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cell.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/cell.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="0" selection-start="165" selection-end="165" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.coffee" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="main.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="0" selection-start="268" selection-end="268" vertical-scroll-proportion="0.3642857">
+            <state line="102" column="0" selection-start="3059" selection-end="3059" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#13#399#0" expanded="false" />
+                <element signature="e#555#991#0" expanded="false" />
+                <element signature="e#598#991#0" expanded="false" />
+                <element signature="e#622#692#0" expanded="false" />
+                <element signature="e#773#991#0" expanded="false" />
+                <element signature="e#1008#1217#0" expanded="false" />
+                <element signature="e#1048#1099#0" expanded="false" />
+                <element signature="e#1150#1200#0" expanded="false" />
+                <element signature="e#1305#1656#0" expanded="false" />
+                <element signature="e#1479#1656#0" expanded="false" />
+                <element signature="e#1571#1656#0" expanded="false" />
+                <element signature="e#1686#1814#0" expanded="false" />
+                <element signature="e#2215#2394#0" expanded="false" />
+                <element signature="e#2412#2467#0" expanded="false" />
+                <element signature="e#2660#2723#0" expanded="false" />
+                <element signature="e#3299#3384#0" expanded="false" />
+                <element signature="e#3402#3607#0" expanded="false" />
+                <element signature="e#3626#4508#0" expanded="false" />
+                <element signature="e#3872#3988#0" expanded="false" />
+                <element signature="e#3905#3988#0" expanded="false" />
+                <element signature="e#4089#4498#0" expanded="false" />
+                <element signature="e#4122#4498#0" expanded="false" />
+                <element signature="e#4161#4389#0" expanded="false" />
+                <element signature="e#4217#4372#0" expanded="false" />
+                <element signature="e#4255#4372#0" expanded="false" />
+                <element signature="e#4534#4639#0" expanded="false" />
+                <element signature="e#4660#4857#0" expanded="false" />
+                <element signature="e#4738#4857#0" expanded="false" />
+                <element signature="e#4771#4857#0" expanded="false" />
+                <element signature="e#4873#5069#0" expanded="false" />
+                <element signature="e#5105#5516#0" expanded="false" />
+                <element signature="e#5148#5516#0" expanded="false" />
+                <element signature="e#5321#5500#0" expanded="false" />
+                <element signature="e#5546#5793#0" expanded="false" />
+                <element signature="e#5606#5793#0" expanded="false" />
+                <element signature="e#5824#6013#0" expanded="false" />
+                <element signature="e#5852#6013#0" expanded="false" />
+                <element signature="e#6035#6255#0" expanded="false" />
+                <element signature="e#6127#6237#0" expanded="false" />
+                <element signature="e#6157#6237#0" expanded="false" />
+                <element signature="e#6324#6806#0" expanded="false" />
+                <element signature="e#6354#6731#0" expanded="false" />
+                <element signature="e#6399#6640#0" expanded="false" />
+                <element signature="e#6597#6640#0" expanded="false" />
+                <element signature="e#6842#7056#0" expanded="false" />
+                <element signature="e#6885#7038#0" expanded="false" />
+                <element signature="e#6910#7038#0" expanded="false" />
+                <element signature="e#6944#7038#0" expanded="false" />
+                <element signature="e#7078#7250#0" expanded="false" />
+                <element signature="e#7132#7250#0" expanded="false" />
+                <element signature="e#7164#7250#0" expanded="false" />
+                <element signature="e#7275#7303#0" expanded="false" />
+                <element signature="e#7323#7774#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/main.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="395" column="0" selection-start="12953" selection-end="12953" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -63,7 +117,7 @@
       <file leaf-file-name="table-container-template.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/templates/table-container-template.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="8" selection-start="256" selection-end="256" vertical-scroll-proportion="-6.5384617">
+            <state line="0" column="0" selection-start="0" selection-end="256" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
@@ -102,6 +156,9 @@
     <option name="UPDATE_CHANGES_POLICY" value="STASH" />
     <option name="LINE_SEPARATORS_CONVERSION" value="ASK" />
   </component>
+  <component name="GitLogSettings">
+    <option name="myStructureFilterPaths" />
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/styles/mixins.less" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -118,12 +175,12 @@
         <option value="$PROJECT_DIR$/js/libs/jquery.rightClick.js" />
         <option value="$PROJECT_DIR$/styles/forms.less" />
         <option value="$PROJECT_DIR$/src/views/cellstate.coffee" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/build/output/index.html" />
         <option value="$PROJECT_DIR$/src/views/game.coffee" />
-        <option value="$PROJECT_DIR$/src/main.coffee" />
         <option value="$PROJECT_DIR$/src/views/cell.coffee" />
         <option value="$PROJECT_DIR$/styles/styles.less" />
+        <option value="$PROJECT_DIR$/src/main.coffee" />
+        <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
   </component>
@@ -218,47 +275,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="styles" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Minesweeper" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Minesweeper" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Minesweeper" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Minesweeper" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Minesweeper" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Minesweeper" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -472,7 +489,7 @@
       <ConfigurationWrapper RunnerId="NodeJS.run" />
       <method />
     </configuration>
-    <configuration default="false" name="compile-coffee" type="NodeJSConfigurationType" factoryName="Node JS" path-to-node="C:/Program Files/nodejs/node" path-to-js-file="C:/Program Files/nodejs/node_modules/coffee-script/bin/coffee" application-parameters="--compile -b --output js/ src/" working-dir="$PROJECT_DIR$">
+    <configuration default="false" name="compile-coffee" type="NodeJSConfigurationType" factoryName="Node JS" path-to-node="C:/Program Files/nodejs/node" path-to-js-file="C:/Program Files/nodejs/node_modules/coffee-script/bin/coffee" application-parameters="--compile --output js/ src/" working-dir="$PROJECT_DIR$">
       <RunnerSettings RunnerId="NodeJS.debug" />
       <RunnerSettings RunnerId="NodeJS.run" />
       <ConfigurationWrapper RunnerId="NodeJS.debug" />
@@ -542,15 +559,15 @@
     <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32828283" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32996634" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7508143" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32828283" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32828283" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2903739" sideWeight="0.7247557" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2903739" sideWeight="0.7247557" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39967638" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16666667" sideWeight="0.50358" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2752443" sideWeight="0.49085122" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2752443" sideWeight="0.49085122" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="JsTestDriver Server" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32996634" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -596,7 +613,7 @@
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
     <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="only pics missing" />
+    <option name="LAST_COMMIT_MESSAGE" value="will remove all requirejs dependencies" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -615,27 +632,12 @@
     <MESSAGE value="refactoring code + styles" />
     <MESSAGE value="added build scripts but them doesn't work :(&#10;game works almost fine..." />
     <MESSAGE value="only pics missing" />
+    <MESSAGE value="will remove all requirejs dependencies" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/styles/forms.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="136" column="1" selection-start="2650" selection-end="2650" vertical-scroll-proportion="0.24485597">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/libs/require.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.21564482">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build/server">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -678,20 +680,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/cellstate.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="22" selection-start="450" selection-end="450" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="0" selection-start="688" selection-end="688" vertical-scroll-proportion="-13.846154">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/styles/variables.less">
       <provider selected="true" editor-type-id="text-editor">
         <state line="16" column="0" selection-start="449" selection-end="449" vertical-scroll-proportion="0.0">
@@ -706,30 +694,91 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/cell.coffee">
+    <entry file="file://$PROJECT_DIR$/js/libs/jquery-1.5.1.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="165" selection-end="165" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/game.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="270" selection-end="270" vertical-scroll-proportion="0.0">
+        <state line="7" column="1" selection-start="390" selection-end="390" vertical-scroll-proportion="0.20659722">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/templates/table-container-template.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="8" selection-start="256" selection-end="256" vertical-scroll-proportion="-6.5384617">
+        <state line="0" column="0" selection-start="0" selection-end="256" vertical-scroll-proportion="-0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="395" column="0" selection-start="12953" selection-end="12953" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="268" selection-end="268" vertical-scroll-proportion="0.3642857">
+        <state line="102" column="0" selection-start="3059" selection-end="3059" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#13#399#0" expanded="false" />
+            <element signature="e#555#991#0" expanded="false" />
+            <element signature="e#598#991#0" expanded="false" />
+            <element signature="e#622#692#0" expanded="false" />
+            <element signature="e#773#991#0" expanded="false" />
+            <element signature="e#1008#1217#0" expanded="false" />
+            <element signature="e#1048#1099#0" expanded="false" />
+            <element signature="e#1150#1200#0" expanded="false" />
+            <element signature="e#1305#1656#0" expanded="false" />
+            <element signature="e#1479#1656#0" expanded="false" />
+            <element signature="e#1571#1656#0" expanded="false" />
+            <element signature="e#1686#1814#0" expanded="false" />
+            <element signature="e#2215#2394#0" expanded="false" />
+            <element signature="e#2412#2467#0" expanded="false" />
+            <element signature="e#2660#2723#0" expanded="false" />
+            <element signature="e#3299#3384#0" expanded="false" />
+            <element signature="e#3402#3607#0" expanded="false" />
+            <element signature="e#3626#4508#0" expanded="false" />
+            <element signature="e#3872#3988#0" expanded="false" />
+            <element signature="e#3905#3988#0" expanded="false" />
+            <element signature="e#4089#4498#0" expanded="false" />
+            <element signature="e#4122#4498#0" expanded="false" />
+            <element signature="e#4161#4389#0" expanded="false" />
+            <element signature="e#4217#4372#0" expanded="false" />
+            <element signature="e#4255#4372#0" expanded="false" />
+            <element signature="e#4534#4639#0" expanded="false" />
+            <element signature="e#4660#4857#0" expanded="false" />
+            <element signature="e#4738#4857#0" expanded="false" />
+            <element signature="e#4771#4857#0" expanded="false" />
+            <element signature="e#4873#5069#0" expanded="false" />
+            <element signature="e#5105#5516#0" expanded="false" />
+            <element signature="e#5148#5516#0" expanded="false" />
+            <element signature="e#5321#5500#0" expanded="false" />
+            <element signature="e#5546#5793#0" expanded="false" />
+            <element signature="e#5606#5793#0" expanded="false" />
+            <element signature="e#5824#6013#0" expanded="false" />
+            <element signature="e#5852#6013#0" expanded="false" />
+            <element signature="e#6035#6255#0" expanded="false" />
+            <element signature="e#6127#6237#0" expanded="false" />
+            <element signature="e#6157#6237#0" expanded="false" />
+            <element signature="e#6324#6806#0" expanded="false" />
+            <element signature="e#6354#6731#0" expanded="false" />
+            <element signature="e#6399#6640#0" expanded="false" />
+            <element signature="e#6597#6640#0" expanded="false" />
+            <element signature="e#6842#7056#0" expanded="false" />
+            <element signature="e#6885#7038#0" expanded="false" />
+            <element signature="e#6910#7038#0" expanded="false" />
+            <element signature="e#6944#7038#0" expanded="false" />
+            <element signature="e#7078#7250#0" expanded="false" />
+            <element signature="e#7132#7250#0" expanded="false" />
+            <element signature="e#7164#7250#0" expanded="false" />
+            <element signature="e#7275#7303#0" expanded="false" />
+            <element signature="e#7323#7774#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="0" selection-start="222" selection-end="222" vertical-scroll-proportion="0.30203044">
           <folding />
         </state>
       </provider>
