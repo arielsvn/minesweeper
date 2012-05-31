@@ -5,12 +5,14 @@
 @import "type.less";
 @import "forms.less";
 
-@cellWidth: 30px;
-@cellHeight: 30px;
+@cellWidth: 50px;
+@cellHeight: 50px;
+
+@redLight: lighten(@red, 35%);
 
 #gameapp{
     margin-top: 15px;
-    width: 280px;
+    width: @cellWidth*9;
     .center-block;
 
     header h1{
@@ -27,14 +29,34 @@
         div {
             display: inline;
         }
+
+        #time-left-icon{
+                width: 32px;
+                height: 32px;
+                position: absolute;
+                left: 0;
+                top: -3px;
+                opacity: 0.5;
+            }
         #time-left{
             position: absolute;
-            left: 0px;
+            left: 32px;
+            top: 0;
         }
-        #mines-left{
+        #mines-left-icon{
+            width: 32px;
+            height: 32px;
             margin-right: 0;
             position: absolute;
             right: 0px;
+            top: -1px;
+            opacity: 0.5;
+        }
+
+        #mines-left{
+            margin-right: 0;
+            position: absolute;
+            right: 34px;
             top: 1px;
         }
         #reset-button{
@@ -73,11 +95,12 @@
             th {
                 width: @cellWidth;
 
-                font-size: 26px;
+                font-size: @cellHeight - 4;
                 font-weight: bold;
 
                 #cell-content {
                     .size(@cellHeight - 2, @cellWidth - 2);
+
                     margin: 1px;
 
                     &.hidden {
@@ -110,15 +133,21 @@
                     }
 
                     &.mineVisible{
-                        background: lighten(@red, 35%);
+                         background: url("../pics/seemine.png");
+                         background-color: @redLight;
+                         background-size: @cellWidth @cellHeight;
                     }
 
                     &.mineBlown{
-                        background: @red
+                        background: url("../pics/hitmine.png");
+                        background-color: @red;
+                        background-size: @cellWidth @cellHeight;
                     }
 
                     &.flagued{
-                        background: @grayDark;
+                        background: url("../pics/guessmine.png");
+                        background-color: @grayDark;
+                        background-size: @cellWidth @cellHeight;
                     }
                 }
             }
